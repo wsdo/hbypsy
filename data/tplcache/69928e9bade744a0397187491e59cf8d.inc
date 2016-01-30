@@ -1,0 +1,1 @@
+<a href="[field:typeurl/]"><img src="{dede:global.cfg_templeturl /}/images/index_30.gif" alt="¸ü¶à" /></a>

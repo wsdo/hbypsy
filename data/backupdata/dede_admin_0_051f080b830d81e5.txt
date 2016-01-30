@@ -1,0 +1,1 @@
+INSERT INTO `dede_admin` VALUES('1','10','admin','d782c827f05debb408e5','admin','admin','admin@qq.com','','1367819240','180.136.163.124');

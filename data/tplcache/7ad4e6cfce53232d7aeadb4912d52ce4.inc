@@ -1,0 +1,1 @@
+[field:content function=' substr(@me,0,200)/]

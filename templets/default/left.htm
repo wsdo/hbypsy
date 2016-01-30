@@ -1,0 +1,35 @@
+<div class="side">
+    <!--产品分类-->
+    <div class="cate mod">
+      <div class="title"> <span></span>
+        <h3>产品分类</h3>
+      </div>
+      <div class="cont">
+        <ul>
+
+        {dede:channel type='son' typeid='2'}
+		<li><a href='[field:typeurl/]'>[field:typename/]</a></li>
+        {/dede:channel}
+        </ul>
+      </div>
+    </div>
+    <!--//产品分类-->
+    <!--快速导航-->
+
+    <div class="quicknav"> 
+     
+ <a href="{dede:type typeid='11'}[field:typeurl/]{/dede:type}"><img src="{dede:global.cfg_templeturl /}/images/index_49.gif" alt="成功案例" width="249" height="61" /></a>
+     
+      <a href="{dede:type typeid='14'}[field:typeurl/]{/dede:type}"><img src="{dede:global.cfg_templeturl /}/images/index_55.gif" alt="在线留言" width="249" height="63" /></a> </div>
+
+    <!--//快速导航-->
+    <!--联系我们-->
+    <div class="contact mod">
+      <div class="title"> <span></span>
+        <h3>联系我们</h3>
+
+      </div>
+      <div class="cont">{dede:mytag name='左侧联系我们' /} </div>
+    </div>
+    <!--//联系我们-->
+  </div>

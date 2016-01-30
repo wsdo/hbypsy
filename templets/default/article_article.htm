@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{dede:field.title/}_{dede:global.cfg_webname/}</title>
+<meta name="keywords" content="{dede:field name='keywords'/}" />
+<meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
+<link href="{dede:global.cfg_templeturl /}/css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<!--header-->
+{dede:include filename="head.htm"/}
+<!--//header-->
+<!--content-->
+<div id="content">
+
+  <div class="side">
+    <!--产品分类-->
+    <div class="cate mod">
+      <div class="title"> <span></span>
+        <h3>产品分类</h3>
+      </div>
+      <div class="cont">
+        <ul>
+
+                  {dede:channel type='son' typeid='2'}
+		<li><a href='[field:typeurl/]'>[field:typename/]</a></li>
+        {/dede:channel}
+        </ul>
+      </div>
+    </div>
+    <!--//产品分类-->
+    <!--快速导航-->
+
+    <div class="quicknav"> 
+     
+ <a href="{dede:type typeid='11'}[field:typeurl/]{/dede:type}"><img src="{dede:global.cfg_templeturl /}/images/index_49.gif" alt="成功案例" width="249" height="61" /></a>
+     
+      <a href="{dede:type typeid='14'}[field:typeurl/]{/dede:type}"><img src="{dede:global.cfg_templeturl /}/images/index_55.gif" alt="在线留言" width="249" height="63" /></a> </div>
+
+    <!--//快速导航-->
+    <!--联系我们-->
+    <div class="contact mod">
+      <div class="title"> <span></span>
+        <h3>联系我们</h3>
+
+      </div>
+      <div class="cont">{dede:mytag name='左侧联系我们' /}</div>
+    </div>
+    <!--//联系我们-->
+  </div>
+  <div class="main">
+    <div class="detail mod">
+
+      <div class="title"> <span></span>
+        <h3>{dede:type}[field:typename /]{/dede:type} </h3>
+      </div>
+      <div class="cont">
+     
+ <div class='tit'>{dede:field.title/}</div><div class='related'>
+ <p>时间:{dede:field.pubdate function="MyDate('Y-m-d H:i',@me)"/} | 来源:{dede:field.source/} | 作者:{dede:field.writer/}  | 点击:<script src="{dede:field name='phpurl'/}/count.php?view=yes&aid={dede:field name='id'/}&mid={dede:field name='mid'/}" type='text/javascript' language="javascript"></script>次</p></div>
+ 
+ <div class='text'>{dede:field.body/}</div>
+
+<div class='other'><ul><li>{dede:prenext get='pre'/}</li><li>{dede:prenext get='next'/}</li> </ul></div><div class='print'><a href='javascript:window.print();'>【打印此文】</a>&nbsp;<a href='javascript:window.close();'>【关闭窗口】</a></div>
+        </div>
+
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<!--//content-->
+<!--footer-->
+{dede:include filename="foot.htm"/}
+<!--//footer-->
+</body>
+</html>

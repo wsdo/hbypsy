@@ -1,0 +1,195 @@
+<?php
+if(!isset($GLOBALS['_vars'])) $GLOBALS['_vars'] = array(); 
+$fields = array();
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title><?php echo $cfg_webname; ?> - 留言本</title>
+<link href="<?php echo $cfg_templeturl; ?>/css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<!--header-->
+<?php
+   pasterTempletDiy("default/head.htm");
+?>
+<!--//header-->
+<!--content-->
+<div id="content">
+
+  <?php
+   pasterTempletDiy("default/left.htm");
+?>
+  <div class="main">
+    <div class="detail mod">
+
+      <div class="title"> <span></span>
+        <h3>在线留言</h3>
+      </div>
+      <div class="cont zxly">
+      <?php 
+  $ntt=0;
+  $bgcc = '#FBFEED';
+  
+$atts = array();
+$atts['tagname'] = 'datalist';
+$blockValue = $this->refObj->GetArcList($atts,$this->refObj,$fields); 
+if(is_array($blockValue)){
+foreach( $blockValue as $key=>$fields )
+{
+?>
+    <table width='100%' border='0' align="center" cellpadding='0' cellspacing='0' style="<?php echo (($ntt==0) ? "background:{$bgcc}" : 'background:#ffffff'); ?>">
+      <tr>
+        <td width='160' align="center" class='ltd'>
+        	<b><?php echo $fields['uname']; ?></b>
+        </td>
+      	<td height="26" class='timetd'>
+      		<img height='16' src='guestbook/images/time.gif' width='16' /> 时间: <?php echo MyDate('m-d H:i',$fields['dtime']); ?>
+      	  &nbsp; 
+      	  主题：<?php echo $fields['title']; ?>
+      	</td>
+      </tr>
+      <tr>
+      	<td width='160' rowspan='2' align="center" class='lefttd'>
+        	<table width='160' border='0' align="center" cellpadding='1' cellspacing='2'>
+          	<tr>
+            	<td height="80" align="center">
+            		<img src='guestbook/images/<?php echo $fields['face']?>.gif' border=0 /> <?php echo GetIsCheck($fields['ischeck'],$fields['id'])?>
+            	</td>
+          	</tr>
+          	<tr>
+            	<td height="20">&nbsp;来自：<?php echo preg_replace("#[^\.]*\.[^\.]*$#","*.*",$fields['ip']); ?></td>
+          	</tr>
+          	<tr>
+            	<td height="20">&nbsp;QQ：<?php echo $fields['qq']?></td>
+          	</tr>
+        	</table>
+        </td>
+      	<td class='msgtd'><?php echo $fields['msg']; ?></td>
+      </tr>
+      <tr>
+      	<td height="26" class="bottomtd">
+      		<a href='mailto:<?php echo $fields["email"]?>'><img src='guestbook/images/mail.gif' border=0 width='16' height='16' />[邮件]</a> &nbsp;
+      		<a href='http://<?php echo $fields['homepage']?>' target='_blank'><img src='guestbook/images/home.gif' border=0 width='16' height='16' />[主页]</a> &nbsp;
+      		<a href='guestbook.php?action=admin&id=<?php echo $fields['id']; ?>'><img src='guestbook/images/quote.gif' border=0 height=16 width=16 />[回复/编辑]</a> &nbsp;
+      		<?php if($g_isadmin) { ?>
+      		<a href='guestbook.php?action=admin&id=<?php echo $fields['id']; ?>&job=del'><img src='guestbook/images/del.gif' border=0 height=16 width=16 />[删除]</a>
+      	  <?php }  ?>
+      	</td>
+      </tr>
+    </table>
+    <?php if($ntt==0){$ntt=1;}else{ $ntt=0; } 
+}
+}?>
+    
+   <table border='0' cellpadding='0' cellspacing='0' width='100%' align='center' class='pagetable'>
+     <tr>
+        <td align="center" height='28'> <?php
+$atts = array();
+$atts['tagname'] = 'pagelist';
+$atts['listsize'] = '5';
+ echo $this->refObj->GetPageList($atts,$this->refObj,$fields); 
+?>
+ </td>
+     </tr>
+   </table>
+    
+   <table width="100%" border="0" cellspacing="1" cellpadding="4" align="center" bgcolor="#dedede" class='writetable'>
+      <form method="post" action="guestbook.php" name="form1">
+        <input type='hidden' name='action' value='save' />
+        <tr>
+          <td colspan='2' class='writetd'><b>发布留言：</b><a name='write'></a></td>
+        </tr>
+        <tr bgcolor="#ffffff">
+          <td align="center" nowrap><font color="#FF0000">*</font>标题：               	          </td>
+          <td align="left" nowrap><input type="text" maxlength="50" name="title" size="30" class="ipt-txt"/></td>
+        </tr>
+        <tr bgcolor="#ffffff">
+          <td align="center" nowrap><font color="#FF0000">*</font>你的姓名：            </td>
+          <td align="left" nowrap><input type="text" maxlength="10" name="uname" size="30" value="<?php echo $g_name; ?>" class="ipt-txt"/></td>
+        </tr>
+        <tr bgcolor="#ffffff">
+          <td height="12" align="center" nowrap>&nbsp;电子邮件：            </td>
+          <td height="12" align="left" nowrap><input maxlength="80" type="text" name="email" size="30" class="ipt-txt"/></td>
+        </tr>
+        <tr bgcolor="#ffffff">
+          <td height="2" align="center" nowrap><font color="#FF0000">*</font>留言内容：<br />                            	          	</td>
+          <td height="2" align="left" nowrap><textarea name="msg" cols="38" rows="5" class="textarea ipt-txt"></textarea>
+            &nbsp; (1000字内) </td>
+        </tr>
+        
+        <tr bgcolor="#ffffff">
+          <td align="center" nowrap>OICQ号码：</td>
+          <td width="89%" align="left" nowrap><input maxlength="20" type="text" name="qq" size="20" class="ipt-txt" /></td>
+        </tr>
+        <tr bgcolor="#ffffff">
+          <td align="center" nowrap>个人主页：</td>
+          <td align="left" nowrap><input maxlength="80" type="text" name="homepage" size="20" class="ipt-txt" /></td>
+        </tr>
+        <tr bgcolor="#ffffff">
+          <td align="center" nowrap>选择头像：</td>
+          <td align="left" nowrap><p>
+          	  <input type="radio" name="img" value="01" checked />
+          	  <img src="guestbook/images/01.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="02" />
+          	  <img src="guestbook/images/02.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="03" />
+          	  <img src="guestbook/images/03.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="04" />
+          	  <img src="guestbook/images/04.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="05" />
+          	  <img src="guestbook/images/05.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="06" />
+          	  <img src="guestbook/images/06.gif" width="25" height="25" /> 
+          	  <input type="radio" name="img" value="08" />
+          	  <img src="guestbook/images/08.gif" width="25" height="25" />
+          	  <br />
+          	  <br />
+          	  <input type="radio" name="img" value="13" />
+          	  <img src="guestbook/images/13.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="14" />
+          	  <img src="guestbook/images/14.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="15" />
+          	  <img src="guestbook/images/15.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="16" />
+          	  <img src="guestbook/images/16.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="17" />
+          	  <img src="guestbook/images/17.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="18" />
+          	  <img src="guestbook/images/18.gif" width="25" height="25" />
+          	  <input type="radio" name="img" value="20" />
+          	  <img src="guestbook/images/20.gif" width="25" height="25" />        	  </p>
+          	<p>&nbsp;</p></td>
+        </tr>
+        <tr bgcolor="#ffffff">
+          <td align="center" nowrap>验 证 码：</td>
+          <td align="left" nowrap><table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="70"><input name="validate" type="text" id="vdcode2" class="ipt-txt" style="width:60px;text-transform: uppercase;" /></td>
+              <td><img src='../include/vdimgck.php'/></td>
+            </tr>
+          </table></td>
+        </tr>
+        <tr bgcolor="#ffffff">
+          <td colspan="2" align="center" nowrap><input maxlength="1000" type="submit" name="Submit" value="提 交" class="btn-2" />
+            &nbsp;&nbsp;
+            <input type="reset" name="Submit2" value="取 消" class="btn-2" /></td>
+        </tr>
+      </form>
+    </table>
+
+</div>
+
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<!--//content-->
+<!--footer-->
+<?php
+   pasterTempletDiy("default/foot.htm");
+?>
+<!--//footer-->
+</body>
+</html>
